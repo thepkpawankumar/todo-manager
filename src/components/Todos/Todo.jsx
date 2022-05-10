@@ -1,6 +1,5 @@
 import React, { useState, useContext, forwardRef } from "react";
-import {Card, CardContent, Grid, Checkbox, Typography, Container, IconButton, useMediaQuery} from '@material-ui/core'
-import {Check, Delete, Edit} from '@material-ui/icons'
+import {Card, CardContent, Grid, Checkbox, Typography, Container, useMediaQuery} from '@material-ui/core'
 import { TodoContext } from "../../context/Todo";
 import { DeleteConfirm } from "./Actions/DeleteConfirm";
 import EditConfirm from "./Actions/EditConfirm";
@@ -10,14 +9,14 @@ const Todo = forwardRef(
 
   const { markComplete, deleteTodo, editTodo } = useContext(TodoContext);
 
-    const checkTodo = () => markComplete(todo.id);
+    //const checkTodo = () => markComplete(todo.id);
     const delTodo = () => deleteTodo(todo.id);
-    const modifyTodo = () => editTodo(todo.id, todo.title);
+    //const modifyTodo = () => editTodo(todo.id, todo.title);
 
     const matches = useMediaQuery("(max-width: 768px)");
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
-    const  isDeleteConfirmation = true;
+    //const  isDeleteConfirmation = true;
 
     const todoStyle = todo.completed ? {
 
@@ -72,7 +71,7 @@ const Todo = forwardRef(
                   </Grid>
                   <Grid item>
                     <ActionsMenu
-                      deleteTodo={(e) => deleteTodo(e)}
+                      setDeleteOpen={setDeleteOpen}
                       setEditOpen={setEditOpen}
                       todo={todo}
                     />

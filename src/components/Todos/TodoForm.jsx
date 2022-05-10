@@ -18,8 +18,11 @@ const TodoForm = () => {
         SetTitle("");
         if (title.trim()) setOpen(true);
     }
+
+    const ref = React.useRef();
+
     return (
-        <div>
+        <div ref={ref}>
           <Container maxWidth="sm">
             <form onSubmit={createTodo}>
               <FormControl fullWidth={true}>

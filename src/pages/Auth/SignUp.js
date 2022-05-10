@@ -1,13 +1,16 @@
 import React, { useContext, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-
+import {
+  Button,
+  TextField,
+  Link,
+  Grid,
+  Typography,
+  Container
+ } from '@material-ui/core';
+import { useNavigate  } from 'react-router-dom';
 import { AppwriteContext } from "../../components/Appwrite";
+import * as ROUTES from '../../constants/routes';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,6 +34,8 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate  = useNavigate();
+
     // Get Appwrite instance
     const appwrite = useContext(AppwriteContext);
 
@@ -42,9 +47,12 @@ const onSubmit = (e) => {
     return;
     }
 
-    appwrite.doCreateAccount(email, password, name).then((result) => {
-        console.log('Success', result);
+    appwrite.createAccount(email, password, name).then((result) => {
+        navigate(ROUTES.HOME, { replace: true });
       }).catch((error) => {
+
+        alert('Something went wrong with your request');
+
         console.log('Error', error);
       });
     }
@@ -107,7 +115,10 @@ const onSubmit = (e) => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link href="#" variant="body2" onClick={(e) => {
+                e.preventDefault();
+               navigate(ROUTES.SIGN_IN, { replace: true });
+              }}>
                 Already have an account? Sign in
               </Link>
             </Grid>

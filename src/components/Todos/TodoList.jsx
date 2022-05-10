@@ -11,9 +11,9 @@ const TodoList = () => {
 
   const [deleteSnackOpen, setDeleteSnackOpen] = useState(false);
   const [editSnackOpen, setEditSnackOpen] = useState(false);
-
+  const ref = React.useRef();
   return (
-    <>
+  <div ref={ref}>
     {todos && todos.map((todo, index) => {
       return <Todo 
       onDelete={() => setDeleteSnackOpen(true)}
@@ -54,7 +54,8 @@ const TodoList = () => {
     </Alert>
     </Snackbar>
 
-    </>
+    </div>
+
   )
 }
 

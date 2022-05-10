@@ -1,23 +1,16 @@
-import { Typography, IconButton, Menu, MenuItem, useMediaQuery} from "@material-ui/core";
+import { Typography, IconButton, Menu, MenuItem } from "@material-ui/core";
 import {
   DeleteTwoTone as DeleteIcon,
-  EditTwoTone as EditIcon,
-  MoreVert,
-  MoreHoriz
+  EditTwoTone as EditIcon
+
 } from "@material-ui/icons";
 import React, { useState } from "react";
-
+import useChangeMenuIcon from "../../../hooks/useChangeMenuIcon";
 const ITEM_HEIGHT = 48;
 
-function useChangeMenuIcon() {
-  const Icon = () =>
-    useMediaQuery("(max-width: 768px)") ? <MoreVert /> : <MoreHoriz />;
-  return Icon;
-}
-
 export default function ActionsMenu({
-  deleteTodo,
   setEditOpen,
+  setDeleteOpen,
   todo,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -41,7 +34,7 @@ export default function ActionsMenu({
       textColor: "error",
       icon: DeleteIcon,
       method: (e) => {
-        deleteTodo(e);
+        setDeleteOpen(true)
         setAnchorEl(null);
       },
     },
@@ -52,7 +45,10 @@ export default function ActionsMenu({
 
   const handleEvent = (option, e) => {
    if (option === "Edit") setEditOpen(true);
-    else if (option === "Delete") deleteTodo(e);
+    else if (option === "Delete") {
+
+      setDeleteOpen(true);
+    }
     setAnchorEl(null);
   };
 

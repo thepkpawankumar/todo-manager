@@ -1,4 +1,4 @@
-# Todo manager App with Appwrite backend
+# Getting Started with Todo manager App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 It uses material ui for design and [Appwrite](https://appwrite.io/) for backend.

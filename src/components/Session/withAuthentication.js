@@ -9,7 +9,7 @@ const withAuthentication = (Component) =>
 
     const getCurrentUser = useCallback(() => {
       appwrite
-        .doGetCurrentUser()
+        .getCurrentUser()
         .then((user) => {
           setAuthUser(user);
         })

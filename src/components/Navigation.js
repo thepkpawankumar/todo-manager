@@ -3,14 +3,13 @@ import {
     Button,
     makeStyles,
     Toolbar,
-    Box,
     Link,
     Typography,
   } from '@material-ui/core';
   import React, { useContext } from 'react';
   import { useNavigate  } from 'react-router-dom';
   import * as ROUTES from '../constants/routes';
-  import AuthUserContext from '../context/Session';
+  import { AppwriteContext } from "./Appwrite";
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,7 +24,25 @@ import {
     const classes = useStyles();
     const navigate  = useNavigate();
   
-    const {authUser} = useContext(AuthUserContext);
+    const appwrite = useContext(AppwriteContext);
+
+    let isLoggedin = localStorage.getItem("isLoggedin");
+
+    const handleLogout = () => {
+      appwrite.logout().then((result) => {
+
+        localStorage.removeItem("isLoggedin");
+      }).catch((error) => {
+
+        alert('Something went wring with your request')
+        console.log('Error', error);
+      }).finally(() => {
+
+        navigate(ROUTES.HOME, { replace: true });
+      });
+
+     
+    };
 
     return (
       <div className={classes.root}>
@@ -38,28 +55,21 @@ import {
                 underline="none"
                 onClick={(e) => {
                   e.preventDefault();
-                 navigate(ROUTES.LANDING, { replace: true });
+                 navigate(ROUTES.HOME, { replace: true });
                 }}
               >
-                Task Manager
+                Todo Manager
               </Link>
             </Typography>
-            {authUser ? (
+            {isLoggedin ? (
             <>
-            {authUser.name && (
-                <Box mr={3}>
-                  <Typography variant="h6" color="inherit">
-                    Hello, {authUser.name}
-                  </Typography>
-                </Box>
-              )}
               <Button color="inherit" onClick={() => navigate(ROUTES.HOME, { replace: true })}>
                 Home
               </Button>
-              <Button color="inherit" onClick={() => navigate(ROUTES.TASKS, { replace: true })}>
-                Tasks
+              <Button color="inherit" onClick={() => navigate(ROUTES.TODOS, { replace: true })}>
+                Todos
               </Button>
-              <Button color="inherit">Sign Out</Button>
+              <Button color="inherit" onClick={handleLogout}>Sign Out</Button>
             </>
             ) : (
                 <>

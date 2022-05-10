@@ -1,12 +1,16 @@
 import React, { useContext, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import {
+  Button,
+  Typography,
+  Link,
+  TextField,
+  Grid,
+  Container
+} from '@material-ui/core';
 import { AppwriteContext } from "../../components/Appwrite";
+import { useNavigate  } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,6 +38,8 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate  = useNavigate();
+
   // Get Appwrite instance
   const appwrite = useContext(AppwriteContext);
   // Create event listener
@@ -44,9 +50,15 @@ export default function SignIn() {
       return;
     }
 
-    appwrite.doLogin(email, password).then((result) => {
-      console.log('Success', result);
+    appwrite.login(email, password).then((result) => {
+
+      localStorage.setItem("isLoggedin", 1);
+      navigate(ROUTES.TODOS, { replace: true });
+
     }).catch((error) => {
+
+      alert('Something went wrong with your request');
+
       console.log('Error', error);
     });
   }
@@ -57,6 +69,7 @@ export default function SignIn() {
           Sign in
         </Typography>
         <form className={classes.form} noValidate onSubmit={onSubmit}>
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -91,13 +104,20 @@ export default function SignIn() {
             Sign In
           </Button>
           <Grid container>
+             {/*
             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
+            */}
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2"
+              onClick={(e) => {
+                e.preventDefault();
+               navigate(ROUTES.SIGN_UP, { replace: true });
+              }}
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

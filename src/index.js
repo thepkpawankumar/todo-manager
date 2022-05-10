@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Appwrite, {AppwriteContext} from './components/Appwrite';
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
      <AppwriteContext.Provider value={new Appwrite()}>
-     <App />
+       <App />
+  
      </AppwriteContext.Provider>
     
   </React.StrictMode>

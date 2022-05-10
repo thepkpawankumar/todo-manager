@@ -1,51 +1,24 @@
 import React, { useState, useContext } from "react";
 import { IconButton, Menu, MenuItem, Typography } from "@material-ui/core";
 import {
-  DeleteSweepTwoTone as DeleteSweepIcon,
-  SvgIconComponent,
+  DeleteSweepTwoTone as DeleteSweepIcon
 } from "@material-ui/icons";
-import useChangeMenuIcon from "../../hooks/useChangeMenuIcon";
-import { MainContext } from "../../context/MainContext";
+import useChangeMenuIcon from "../../../hooks/useChangeMenuIcon";
+import { TodoContext } from "../../../context/Todo";
 import { DeleteAllConfirm } from "./DeleteConfirm";
 
 const MoreMenu = () => {
-  const [anchorEl, setAnchorEl] = useState<
-    (EventTarget & HTMLButtonElement) | null
-  >(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const open = Boolean(anchorEl);
   const MenuIcon = useChangeMenuIcon();
-  const { todos, deleteAll } = useContext(MainContext)!;
+  const { todos, deleteAll } = useContext(TodoContext);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+  const handleClick = (e) =>
     setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
-  interface Option {
-    name: string;
-    iconColor:
-      | "error"
-      | "action"
-      | "inherit"
-      | "disabled"
-      | "primary"
-      | "secondary"
-      | undefined;
-    textColor:
-      | "error"
-      | "inherit"
-      | "primary"
-      | "secondary"
-      | "initial"
-      | "textPrimary"
-      | "textSecondary"
-      | undefined;
-    disabled: boolean;
-    icon: SvgIconComponent;
-    method: () => void;
-  }
-
-  const options: Option[] = [
+  const options = [
     {
       name: "Delete All",
       iconColor: "error",

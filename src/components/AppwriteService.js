@@ -1,6 +1,10 @@
 import { Appwrite } from 'appwrite';
 import {v4 as uuid} from 'uuid'
-import {config} from '../config';
+
+const config = {
+  projectId: process.env.REACT_APP_APPWRITE_PROJECT,
+  endpoint: process.env.REACT_APP_APPWRITE_ENDPOINT,
+};
 
 const appwrite = new Appwrite();
 
